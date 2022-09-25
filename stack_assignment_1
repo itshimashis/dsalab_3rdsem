@@ -28,7 +28,7 @@ int popintegerstack(struct stack *st,int *dp){
     else{
         st->top--;
         int value=st->arr[st->top+1];
-        *dp=value;
+        *dp=value; //dp=&value is not valid because the scope of the variable the value is only within the function,so after execution the location is invalid 
         return 1;
     }
 }

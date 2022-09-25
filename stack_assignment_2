@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<malloc.h>
+#include<stdlib.h>
+#define endl printf("\n")
+struct stack{
+    int top;
+    int *arr;
+    int size};
+
+struct stack newstack(int stacksize){
+   struct stack mystack;
+   mystack.top=-1;
+   mystack.arr=(int*)malloc(sizeof(int)*stacksize);
+   mystack.size=stacksize;
+   return mystack;
+}
+int pushinintegerstack(struct stack *st,int data){
+    if(st->top==st->size-1) return 0;//stack is full no further element can be added
+    else{
+        st->top++;
+        st->arr[st->top]=data;
+        return 1;//pushing inside stack operation is successful
+    }
+
+}
+int popintegerstack(struct stack *st,int *dp){
+    if(st->top==-1) return 0;
+    else{
+        st->top--;
+        int value=st->arr[st->top+1];
+        *dp=value; 
+        return 1;
+    }
+}
+int ifempty(struct stack st){
+    if(st.top==-1) return 1;
+    else return 0;
+}
+int iffull(struct stack st){
+    if(st.size-1==st.top) return 1;
+    else return 0;
+}
+int freeintegerstack(struct stack *st){
+    if(st->arr==NULL) return 0;
+    else {
+        free(st->arr);
+        return 1;
+    }
+}
+
+int main(){
+ struct stack stack1,stack2;
+ int n,m;
+ printf("what is the size of the first stack ");
+ scanf("%d",&n);
+  printf("what is the size of the second stack ");
+ scanf("%d",&m);
+
+ stack1=newstack(n);stack2=newstack(m);
+ while(1){
+    int temp;
+    printf("enter the number ");
+    scanf("%d",&temp);
+    if(iffull(stack1)!=1) pushinintegerstack(&stack1,temp);
+    else if(iffull(stack2)!=1) pushinintegerstack(&stack2,temp);
+    else if(iffull(stack1)==1 && iffull(stack2)==1){
+        while(ifempty(stack2)!=1){
+            int x;
+            int y;
+            y=popintegerstack(&stack2,&x);
+            printf("%d",x);
+            endl;
+        }
+        while(ifempty(stack1)!=1){
+              int x;
+            int y;
+            y=popintegerstack(&stack1,&x);
+            printf("%d",x);
+            endl;
+
+        }
+        break;//after filling up ans popping out once 
+    }
+
+    
+ }
+
+
+
+
+    return 0;
+}

@@ -1,0 +1,69 @@
+#include<stdio.h>
+#include<malloc.h>
+#include<stdlib.h>
+#define endl printf("\n")
+struct stack{
+    int top;
+    int *arr;
+    int size};
+
+struct stack newstack(int stacksize){
+   struct stack mystack;
+   mystack.top=-1;
+   mystack.arr=(int*)malloc(sizeof(int)*stacksize);
+   mystack.size=stacksize;
+   return mystack;
+}
+int pushinintegerstack(struct stack *st,int data){
+    if(st->top==st->size-1) return 0;//stack is full no further element can be added
+    else{
+        st->top++;
+        st->arr[st->top]=data;
+        return 1;//pushing inside stack operation is successful
+    }
+
+}
+int popintegerstack(struct stack *st,int *dp){
+    if(st->top==-1) return 0;
+    else{
+        st->top--;
+        int value=st->arr[st->top+1];
+        *dp=value;
+        return 1;
+    }
+}
+int ifempty(struct stack st){
+    if(st.top==-1) return 1;
+    else return 0;
+}
+int iffull(struct stack st){
+    if(st.size-1==st.top) return 1;
+    else return 0;
+}
+int freeintegerstack(struct stack *st){
+    if(st->arr==NULL) return 0;
+    else {
+        free(st->arr);
+        return 1;
+    }
+}
+
+int main(){
+    struct stack mystack;
+    mystack=newstack(2);
+    printf("%d",ifempty(mystack));//returns 1 as the stack is empty
+    int z=pushinintegerstack(&mystack,69);//pushing a element in the stack
+    printf("\n");
+    printf("%d",ifempty(mystack));//this time this gives 0 as the stack is not empty
+    int z1=pushinintegerstack(&mystack,68);
+    printf("\n");
+    printf("%d",iffull(mystack));//returns 1 as the allocated size has been filled up
+    endl;
+    int x;
+    int z3=popintegerstack(&mystack,&x);
+    printf("%d",z3);endl; //prints 1 as the process is successful
+    printf("%d",x);//returns 68 as it is the  topmost eneterd element
+
+
+    return 0;
+}
